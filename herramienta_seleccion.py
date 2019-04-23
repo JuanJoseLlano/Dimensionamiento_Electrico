@@ -35,33 +35,38 @@ lifetime.set(20)
 
 phases=IntVar() #Phases number of the circuit
 phases.set(1)
+
+kwh_cost=IntVar() #Electricty cost in COP
+kwh_cost.set(550)
 #--------------------------------------------------------------
 #Input data creation 
 Label(principal_frame, text='Carga[KW+JKVAR]').grid(row=0,column=0)
-Entry(principal_frame, textvariable=load).grid(row=1, column=0)
+Entry(principal_frame, textvariable=load, width="15").grid(row=1, column=0,padx=5)
 
 Label(principal_frame, text='Longitud[m]').grid(row=0,column=1)
-Entry(principal_frame, textvariable=length).grid(row=1, column=1)
+Entry(principal_frame, textvariable=length, width="10").grid(row=1, column=1,padx=5)
 
 Label(principal_frame, text='Voltaje[V]').grid(row=0,column=2)
-Entry(principal_frame, textvariable=voltage).grid(row=1, column=2)
+Entry(principal_frame, textvariable=voltage, width="8").grid(row=1, column=2, padx=5)
 
 Label(principal_frame, text='Tasa energía[%/Año]').grid(row=0,column=3)
-Entry(principal_frame, textvariable=rate).grid(row=1, column=3)
+Entry(principal_frame, textvariable=rate, width="16").grid(row=1, column=3)
 
 Label(principal_frame, text='Vida útil[Años]').grid(row=0,column=4)
-Entry(principal_frame, textvariable=lifetime).grid(row=1, column=4)
+Entry(principal_frame, textvariable=lifetime, width="12").grid(row=1, column=4, padx=5)
 
-Radiobutton(principal_frame, text='Circuito monofásico', variable=phases,value=1 ).grid(row=0,column=5)
-Radiobutton(principal_frame, text='Circuito trifásico', variable=phases,value=3 ).grid(row=1,column=5)
+Label(principal_frame, text='Costo kWh').grid(row=0,column=5)
+Entry(principal_frame, textvariable=kwh_cost, width="8").grid(row=1, column=5)
 
-Button(principal_frame, text='Realizar análisis').grid(row=0, column=6)
+Radiobutton(principal_frame, text='Circuito monofásico', variable=phases,value=1 ).grid(row=0,column=6)
+Radiobutton(principal_frame, text='Circuito trifásico', variable=phases,value=3 ).grid(row=1,column=6)
 
-figure1=plt.Figure(figsize=(6,5), dpi=100)
+Button(principal_frame, text='Realizar análisis').grid(row=0, column=7)
+
+figure1=plt.Figure(figsize=(4,3))
 graph = figure1.add_subplot(111)
 graph.plot([1,2,3,4,5,6],[1,2,3,4,5,6])
-canvas = FigureCanvasTkAgg(figure1, root)
-canvas.get_tk_widget().pack()
-
+canvas = FigureCanvasTkAgg(figure1, principal_frame)
+canvas.get_tk_widget().grid(row=2)
 
 root.mainloop()
