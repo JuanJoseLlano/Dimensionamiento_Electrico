@@ -41,8 +41,27 @@ class wire:
         '500':0.1476+0.1575J,'600':0.1247+0.1575,'750':0.1017+0.1575J,'1000':0.0820+0.15092J}}}
         
 def voltage_drop(load, impedance, voltage):
-    return 0
+    #The units are load in W+JQ, impedane in ohms(complex) and voltage in volts
+    #This function will calculate the voltage drop acording to the electrical moment method
+    power_factor=load.real/load.__abs__() 
+    efective_impedance=impedance.real + impedance.imag*(((1-(power_factor**2))**(1/2))/power_factor)
+    k_factor=efective_impedance/(5*(voltage**2)/1000)
+    drop= load.real*k_factor
+    return drop
 
+def voltage_iteration(conduit_material, 
+                      wire_material, 
+                      circuit_length, 
+                      load,
+                      voltage):
+    #This function calculates the coltage drop for all the wires and returns a list with the
+    #voltage drop values
+    #Conduit_material, wire_material are strings. Cicuit_length and coltage are integers
+    #Load is complex
+    reference_wire=wire()
+    reference_wire.impedance[conduit_material]
+    
+    return 0
 a=wire()
 for i in a.impedance:
     for k in a.impedance[i]:
