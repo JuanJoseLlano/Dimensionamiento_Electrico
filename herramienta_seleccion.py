@@ -11,14 +11,14 @@ Created on Mon Apr 22 15:49:38 2019
 from tkinter import *
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-import back_functions
-
+from back_functions import *
 
 root=Tk()
 root.title('Herramienta selección óptima de conductores')
 #--------------------------------------------------------------
 #Variables creation
 load=StringVar() #Circuit load
+load.set(1000)
 
 length=IntVar() #Circuit length
 length.set(100)
@@ -51,7 +51,7 @@ actual_wire_material.set('Cobre')
 #Input data creation 
 
 data_frame=Frame(root)
-data_frame.pack()
+data_frame.grid(row=0, column=0)
 
 Label(data_frame, text='Carga[KW+JKVAR]').grid(row=0,column=0)
 Entry(data_frame, textvariable=load, width="15").grid(row=1, column=0,padx=5)
@@ -80,16 +80,13 @@ OptionMenu(data_frame,actual_wire_material,*wire_materials).grid(row=1,column=7,
 Radiobutton(data_frame, text='Circuito monofásico', variable=phases,value=1 ).grid(row=0,column=8)
 Radiobutton(data_frame, text='Circuito trifásico', variable=phases,value=3 ).grid(row=1,column=8)
 
-Button(data_frame, text='Realizar análisis').grid(row=0, column=9)
+Button(data_frame, text='Realizar análisis', command=lambda: voltage_drop_graph(root,
+                                                                        actual_conduit_material,
+                                                                        actual_wire_material,
+                                                                        length,
+                                                                        load,
+                                                                        voltage)).grid(row=0, column=9)
 
 #------------------------------------------------------------------
-graph_frame=Frame(root)
-graph_frame.pack()
-figure1=plt.Figure(figsize=(4,3))
-graph = figure1.add_subplot(111)
-graph.plot([1,2,3,4,5,6],[1,2,3,4,5,6])
-canvas = FigureCanvasTkAgg(figure1, graph_frame)
-canvas.get_tk_widget().grid(row=0, column=0)
-
 
 root.mainloop()
